@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ゴミ捨て案内</title>
+<style>
+/* buttonの文字サイズを指定 */
+button {
+    font-size: 20px;
+    /*縦に並べるためにインライン要素からブロック要素に変更している*/
+    display: block;
+    /*上下の余白を15px左右の余白をautoにしている（中央に寄せるため)*/
+    margin: 15px auto;
+}
+h1 {
+    margin: 5px auto;
+}
+</style>
+<script>
+//monthとdateを受け取る
+function answer(month, date) {
+    //もし、monthが12より大きかったら
+    if (month > 12) {
+        //monthから12を引く
+        month = month - 12;
+    }
+    alert("次の収集日は" + month + "月" + date + "日です");
+}
+
+//変数now month deteを作る
+var now, month, date;
+
+function getNow() {
+    //変数nowに現在の時刻を取得
+    now = new Date();
+    //月は、0から始まっているから+1をしている
+    month = now.getMonth() + 1;
+    //日付を取得
+    date = now.getDate();
+    if (month < 4) {
+        month = month + 12; 
+    }
+}
+
+function getCalendar(calendar) {
+    getNow();
+    //カレンダーの長さの回数繰り返す
+    for (var i = 0; i < calendar.length; i++) {
+        //もし月が、calendarの月と同じなら
+        if (month == calendar[i].slice(0,2)) {
+            //もし今日の日付がcalendarの日付より小さいなら
+            if (date < calendar[i].slice(2,4)) {
+                answer(Number(calendar[i].slice(0,2)),Number(calendar[i].slice(2,4)));
+                //ループを抜ける
+                break;
+            }
+        //もしmonthがcalendarの月より小さいなら
+        } else if (month < calendar[i].slice(0,2)){
+            answer(Number(calendar[i].slice(0,2)),Number(calendar[i].slice(2,4)));
+            break;
+        }
+    }
+}
+
+var plasticCalendar = ["1007", "1014", "1021", "1028", "1104", "1111", "1118", "1125", "1202", "1209", "1216", "1223", "1230", "1306", "1313", "1320", "1327", "1403", "1410", "1417", "1424", "1503", "1510", "1517", "1524", "1531"];
+var paperContainerCalendar = ["1017", "1121", "1219", "1323", "1413", "1513"];
+var metalCalendar = ["1012", "1026", "1109", "1130", "1214", "1228", "1311", "1325", "1408", "1422", "1508", "1522"]
+var petBottlesCalendar = ["1006", "1020", "1110", "1124", "1201", "1215", "1305", "1319", "1402", "1416", "1502", "1516"];
+var usedPaperCalendar = ["1012", "1109", "1214", "1311", "1408", "1508"];
+var incombustibleGarbageCalendar = ["1005", "1102", "1207", "1304", "1401", "1501"];
+var oversizedGarbageCalendar = ["1026", "1130", "1228", "1325", "1422", "1522"];
+</script>
+</head>
+<!-- bodyタグを中央寄せにする -->
+<body style="text-align:center">
+<h1>阿賀野市中ノ通地区</h1>
+<h1>ゴミ捨て案内</h1>
+<p>※2023年3月まで</p>
+<!-- ボタンをクリックした時に、getcalenda関数にplasticCalendaリストを渡して実行する。-->
+<button onclick="getCalendar()">プラスチック製容器包装</button>
+<!-- ボタンをクリックした時に、getCalendar関数に、paperContainerCalendarリストを渡して実行する -->
+<button onclick="getCalendar(paperContainerCalendar)">紙製容器包装 雑がみ</button>
+<button onclick="getCalendar(metalCalendar)">金属類</button>
+<button onclick="getCalendar(petBottlesCalendar)">ペットボトル</button>
+<button onclick="getCalendar(usedPaperCalendar)">古紙類</button>
+<button onclick="getCalendar(incombustibleGarbageCalendar)">燃えないゴミ</button>
+<button onclick="getCalendar(oversizedGarbageCalendar)">粗大ごみ</button>
+</body>
+</html>
