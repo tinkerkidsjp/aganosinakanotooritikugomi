@@ -25,7 +25,16 @@ function answer(month, date) {
         //monthから12を引く
         month = month - 12;
     }
-    alert("次の収集日は" + month + "月" + date + "日です");
+    var answerDate;
+    if (month < 4) {
+        //答えの日付の曜日を調べるためにanswerDateを作成
+        answerDate = new Date(2023, month - 1, date);
+    } else {
+        answerDate = new Date(2022, month - 1, date);
+    }
+    //曜日を漢字に直すためのリスト
+    var days = ['日', '月', '火', '水', '木', '金', '土'];
+    alert("次の収集日は" + month + "月" + date + "日(" + days[answerDate.getDay()] + ")です。");
 }
 
 //変数now month deteを作る
